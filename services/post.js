@@ -2,7 +2,7 @@ const { PrismaClient } = require('../generated/prisma');
 
 const prisma = new PrismaClient();
 
-async function getPosts(limit = null) {
+async function getPosts(limit) {
   const count = await prisma.post.count();
   let numberOfPosts;
   if(!limit) {
