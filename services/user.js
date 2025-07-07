@@ -11,10 +11,11 @@ async function createUser({ username, password, email }) {
   return user;
 }
 
-async function findUser(id) {
-  const user = await prisma.user.findUnique({
-    where: { id }
-  })
+async function findUser(id = null, username = null) {
+  const where = {};
+  if (id) where.id = id;
+  else if (username) where.username = username;
+  const user = await prisma.user.findFirst({ where })
   return user;
 }
 
