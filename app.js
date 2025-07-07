@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const authRouter = require('./routes/authRouter');
+const appRouter = require('./routes/appRouter');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -13,6 +14,7 @@ app.get('/', (req, res, next) => {
 })
 
 app.use('/auth', authRouter)
+app.use('/app', appRouter)
 
 app.listen(PORT, () => {
   console.log(`The app is live on port: ${PORT}`)
