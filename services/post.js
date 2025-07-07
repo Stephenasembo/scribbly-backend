@@ -16,6 +16,15 @@ async function getPosts(limit = null) {
   return posts;
 }
 
+async function createPost(post) {
+  const { title, content, userId } = post;
+  const createdPost = await prisma.post.create({
+    data: { title, content, userId }
+  })
+  return createdPost;
+}
+
 module.exports = {
-  getPosts
+  getPosts,
+  createPost,
 }
