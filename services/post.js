@@ -24,7 +24,23 @@ async function createPost(post) {
   return createdPost;
 }
 
+async function getPost(id) {
+  const retrievedPost = await prisma.post.findUnique({
+    where: { id },
+    include: {comments: true}
+  })
+  return retrievedPost;
+}
+
+async function main() {
+  const post = await getPost('22d7af83-8158-4e64-832e-dc30b92cf2f1');
+  console.log(post);
+}
+
+main()
+
 module.exports = {
   getPosts,
   createPost,
+  getPost,
 }
