@@ -20,7 +20,15 @@ async function updateComment(id, content) {
   return updatedComment;
 }
 
+async function deleteComment(id) {
+  const deletedComment = await prisma.comment.delete({
+    where: { id }
+  });
+  return deletedComment;
+}
+
 module.exports = {
   createComment,
   updateComment,
+  deleteComment,
 }

@@ -32,5 +32,10 @@ module.exports = {
       data: post,
       message: 'Post updated successfully',
     })
+  },
+  deleteComment: async (req, res, next) => {
+    const { commentId } = req.params;
+    const comment = await commentModel.deleteComment(commentId);
+    return res.sendStatus(204);
   }
 }
