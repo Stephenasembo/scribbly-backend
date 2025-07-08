@@ -24,5 +24,14 @@ module.exports = {
       data: comment,
       message: 'Comment created successfully',
     })
+  },
+  updateComment: async (req, res, next) => {
+    const { commentId } = req.params;
+    const { content } = req.body;
+    const updatedComment = await Prisma.commentModel.updateComment(commentId, content);
+    return res.status(200).json({
+      data: updatedComment,
+      message: 'Comment updated successfully.',
+    });
   }
 }
