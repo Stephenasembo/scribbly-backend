@@ -18,5 +18,10 @@ module.exports = {
       console.error(err);
       return res.status(500).json({ message: 'An internal error occurred'})
     }
+  },
+  deletePost: async (req, res, next) => {
+    const { postId } = req.params;
+    const post = await postModel.deletePost(postId);
+    return res.sendStatus(204);
   }
 }

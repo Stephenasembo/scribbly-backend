@@ -66,9 +66,17 @@ async function togglePublish(id) {
   }
 }
 
+async function deletePost(id) {
+  const retrievedPost = await prisma.post.delete({
+    where: { id }
+  });
+  return retrievedPost;
+}
+
 module.exports = {
   getPosts,
   createPost,
   getPost,
   togglePublish,
+  deletePost,
 }
