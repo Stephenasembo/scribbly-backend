@@ -32,15 +32,43 @@ async function getPost(id) {
   return retrievedPost;
 }
 
-async function main() {
-  const post = await getPost('22d7af83-8158-4e64-832e-dc30b92cf2f1');
-  console.log(post);
+async function togglePublish(id) {
+  let retrievedPost = await prisma.post.findUnique({
+    where: { id }
+  });
+  if(!retrievedPost) {
+    throw new Error('Post not found.')
+  }
+  if(!retrievedPost.published) {
+    retrievedPost = await prisma.post.update({
+      where: { id },
+      data: {
+        published: true,
+        publishedAt: new Date(),
+      }
+    })
+    return {
+      retrievedPost,
+      message: 'Post successfully published.'
+    };
+  } else {
+    retrievedPost = await prisma.post.update({
+      where: { id },
+      data: {
+        published: false,
+        publishedAt: null,
+      }
+    })
+    return {
+      retrievedPost,
+      message: 'Post successfuly unpublished.'
+    };
+  }
 }
-
-main()
 
 module.exports = {
   getPosts,
   createPost,
   getPost,
+  togglePublish,
 }
