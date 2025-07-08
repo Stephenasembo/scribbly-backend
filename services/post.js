@@ -73,10 +73,24 @@ async function deletePost(id) {
   return retrievedPost;
 }
 
+async function updatePost(id, postData) {
+  const retrievedPost = await getPost(id);
+  const updatedPost = await prisma.post.update({
+    where: { id },
+    data: {
+      title: postData.title || retrievedPost.title,
+      content: postData.content || retrievedPost.content,
+      updatedAt: new Date(),
+    }
+  });
+  return updatedPost;
+}
+
 module.exports = {
   getPosts,
   createPost,
   getPost,
   togglePublish,
   deletePost,
+  updatePost,
 }

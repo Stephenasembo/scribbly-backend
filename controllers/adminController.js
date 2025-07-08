@@ -23,5 +23,14 @@ module.exports = {
     const { postId } = req.params;
     const post = await postModel.deletePost(postId);
     return res.sendStatus(204);
+  },
+  updatePost: async (req, res, next) => {
+    const { postId } = req.params;
+    const postData = req.body;
+    const post = await postModel.updatePost(postId, postData)
+    return res.status(200).json({
+      data: post,
+      message: 'Post updated successfully',
+    })
   }
 }
