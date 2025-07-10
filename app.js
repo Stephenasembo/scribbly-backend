@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const authRouter = require('./routes/authRouter');
 const appRouter = require('./routes/appRouter');
 const adminRouter = require('./routes/adminRouter');
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res, next) => {
   res.json('Hello. This is the homepage.')
