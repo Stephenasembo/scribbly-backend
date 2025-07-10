@@ -19,7 +19,18 @@ async function findUser(id = null, username = null) {
   return user;
 }
 
+async function makeAdmin(id) {
+  const user = await prisma.user.update({
+    where: { id },
+    data: {
+      admin: true,
+    }
+  })
+  return user;
+}
+
 module.exports = {
   createUser,
   findUser,
+  makeAdmin,
 }
