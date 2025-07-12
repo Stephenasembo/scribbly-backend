@@ -4,7 +4,12 @@ const commentModel = require('../services/comment')
 module.exports = {
   getPosts: async (req, res, next) => {
     const { limit } = req.query;
-    const posts = await postModel.getPosts(limit);
+    let posts = await postModel.getPosts(limit);
+    posts = posts.map((post) => ({
+      ...post,
+      author: post.user.username,
+      user: null
+    }))
     res.status(200).json({
       data: posts,
       message: 'Posts retrieval successful'
@@ -13,6 +18,8 @@ module.exports = {
   getPost: async (req, res, next) => {
     const id = req.params.postId;
     const post = await postModel.getPost(id);
+    post.author = post.user.username;
+    delete post.user;
     res.status(200).json({
       data: post,
       message: 'Post retrieved successfully'

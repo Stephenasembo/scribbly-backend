@@ -15,6 +15,7 @@ async function getPosts(limit) {
   const posts = await prisma.post.findMany({
     where: {published: true},
     take: numberOfPosts,
+    include: { user: true }
   })
   return posts;
 }
@@ -30,7 +31,7 @@ async function createPost(post) {
 async function getPost(id) {
   const retrievedPost = await prisma.post.findUnique({
     where: { id },
-    include: {comments: true}
+    include: {comments: true, user: true}
   })
   return retrievedPost;
 }
