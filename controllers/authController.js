@@ -11,8 +11,9 @@ module.exports = {
     user.password = await passwordUtil.hashPassword(user.password);
     const userAccount = await userModel.createUser(user);
     const token = jwt.generateToken(userAccount);
+    delete userAccount.password;
     res.status(200).json({
-      data: {token, user},
+      data: {token, user: userAccount},
       message: 'User created successfully.'
     });
   },
@@ -31,6 +32,7 @@ module.exports = {
     if(!token) {
       return res.status(500).json({message: 'An internal error occurred'})
     }
+    delete user.password;
     return res.status(200).json({
       token,
       user,
