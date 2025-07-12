@@ -12,24 +12,24 @@ module.exports = {
     const userAccount = await userModel.createUser(user);
     const token = jwt.generateToken(userAccount);
     res.status(200).json({
-      token,
-      user,
+      data: {token, user},
+      message: 'User created successfully.'
     });
   },
   loginUser: async (req, res, next) => {
     const { username, password } = req.body;
     const user = await userModel.findUser(null, username);
     if(!user) {
-      return res.status(401).json({error: 'User not found'})
+      return res.status(401).json({message: 'User not found'})
     }
     const isPasswordValid = await passwordUtil.verifyPassword(password, user.password)
     if(!isPasswordValid) {
-      return res.status(401).json({error: 'Incorrect password'})
+      return res.status(401).json({message: 'Incorrect password'})
     }
     req.user = user;
     const token = jwt.generateToken(user);
     if(!token) {
-      return res.status(500).json({error: 'An internal error occurred'})
+      return res.status(500).json({message: 'An internal error occurred'})
     }
     return res.status(200).json({
       token,
