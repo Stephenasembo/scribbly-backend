@@ -37,5 +37,12 @@ module.exports = {
     const { commentId } = req.params;
     const comment = await commentModel.deleteComment(commentId);
     return res.sendStatus(204);
+  },
+  getPosts: async (req, res, next) => {
+    const posts = await postModel.getAdminPosts();
+    return res.status(200).json({
+      data: posts,
+      message: 'Posts retrieved successfully.'
+    })
   }
 }

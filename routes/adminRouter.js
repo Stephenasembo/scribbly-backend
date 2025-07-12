@@ -9,5 +9,6 @@ router.patch('/posts/:postId', controller.togglePublishStatus)
 router.delete('/posts/:postId', controller.deletePost);
 router.put('/posts/:postId', controller.updatePost);
 router.delete('/comments/:commentId', controller.deleteComment);
+router.get('/posts', controller.getPosts);
 
 module.exports = router;

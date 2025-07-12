@@ -20,6 +20,11 @@ async function getPosts(limit) {
   return posts;
 }
 
+async function getAdminPosts() {
+  const posts = await prisma.post.findMany()
+  return posts;
+}
+
 async function createPost(post) {
   const { title, content, userId } = post;
   const createdPost = await prisma.post.create({
@@ -97,4 +102,5 @@ module.exports = {
   togglePublish,
   deletePost,
   updatePost,
+  getAdminPosts,
 }
