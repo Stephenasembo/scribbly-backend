@@ -12,7 +12,10 @@ async function getPosts(limit) {
   } else {
     numberOfPosts = Number(limit)
   }
-  const posts = await prisma.post.findMany({ take: numberOfPosts })
+  const posts = await prisma.post.findMany({
+    where: {published: true},
+    take: numberOfPosts,
+  })
   return posts;
 }
 
