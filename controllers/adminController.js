@@ -1,8 +1,10 @@
 const postModel = require('../services/post')
+const commentModel = require('../services/comment')
 
 module.exports = {
   createPost: async (req, res, next) => {
     const postData = req.body;
+    postData.userId = req.user.id;
     const post = await postModel.createPost(postData);
     res.status(201).json({message: 'Post created.'})
   },
