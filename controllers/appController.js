@@ -46,5 +46,16 @@ module.exports = {
       data: updatedComment,
       message: 'Comment updated successfully.',
     });
+  },
+  deleteComment: async (req, res, next) => {
+    const { commentId } = req.params;
+    const userId = req.user.id;
+    const comment = await commentModel.findComment(commentId);
+    console.log(comment);
+    if(userId === comment.userId) {
+      const deletedComment = await commentModel.deleteComment(commentId);
+      return res.sendStatus(204)
+    }
+    return res.status(403).json({message: 'You are not authorized to delete this message.'})
   }
 }

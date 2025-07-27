@@ -27,8 +27,16 @@ async function deleteComment(id) {
   return deletedComment;
 }
 
+async function findComment(id) {
+  const comment = await prisma.comment.findUnique({
+    where: { id }
+  })
+  return comment;
+}
+
 module.exports = {
   createComment,
   updateComment,
   deleteComment,
+  findComment,
 }
