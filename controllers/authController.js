@@ -46,4 +46,12 @@ module.exports = {
     }
     return res.status(400).json({message: 'Wrong passcode.'})
   },],
+  getUser: [authorizeUser, async(req, res, next) => {
+    if(req.user) {
+      return res.status(200).json({
+        user: req.user
+      })
+    }
+    return res.status(401).json({message: 'User not found.'})
+  },],
 }
