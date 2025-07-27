@@ -1,3 +1,4 @@
+const findUser = require('./user').findUser;
 const { PrismaClient } = require('../generated/prisma');
 
 const prisma = new PrismaClient();
@@ -38,6 +39,11 @@ async function getPost(id) {
     where: { id },
     include: {comments: true, user: true}
   })
+  for (comment of retrievedPost.comments) {
+    const user = await findUser(comment.userId);
+    comment.author = user.username;
+  }
+  console.log(retrievedPost)
   return retrievedPost;
 }
 
