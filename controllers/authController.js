@@ -10,6 +10,11 @@ module.exports = {
     const user = req.body;
     user.password = await passwordUtil.hashPassword(user.password);
     const userAccount = await userModel.createUser(user);
+    if (!userAccount) {
+      return res.status(400).json({
+        message: 'Username and email should be unique'
+      })
+    }
     const token = jwt.generateToken(userAccount);
     delete userAccount.password;
     res.status(200).json({
