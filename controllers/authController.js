@@ -7,8 +7,9 @@ const authorizeUser = require('../middleware/authorizeUser');
 
 async function createRegularUser(req, res, next) {
   const userData = req.body;
-  userData.password = await passwordUtil.hashPassword(user.password);
-  const userAccount = await userModel.createUser(user);
+  userData.password = await passwordUtil.hashPassword(userData.password);
+  const {username, password, email} = userData;
+  const userAccount = await userModel.createUser(username, password, email);
   if (!userAccount) {
       return res.status(400).json({
       message: 'Username and email should be unique'
